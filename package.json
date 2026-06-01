@@ -3,12 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20 <23"
+  },
   "scripts": {
     "dev": "vite",
     "dev:api": "next dev --port 3000",
     "dev:full": "concurrently -k -n vite,api -c cyan,magenta \"npm run dev\" \"npx wait-on http://127.0.0.1:8080 && npm run dev:api\"",
     "build": "vite build",
     "build:api": "prisma generate && next build",
+    "build:vercel": "node scripts/vercel-build.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"lib/**/*.{ts,mjs}\" \"app/**/*.{ts,tsx}\"",

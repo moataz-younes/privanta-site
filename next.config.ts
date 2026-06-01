@@ -18,15 +18,23 @@ const nextConfig: NextConfig = {
   },
   pageExtensions: ["tsx", "ts", "route.ts"],
   async rewrites() {
-    if (process.env.NODE_ENV !== "development") {
-      return [];
+    if (process.env.NODE_ENV === "development") {
+      const vite = process.env.VITE_DEV_SERVER_URL ?? "http://127.0.0.1:8080";
+      return {
+        fallback: [
+          {
+            source: "/:path*",
+            destination: `${vite}/:path*`,
+          },
+        ],
+      };
     }
-    const vite = process.env.VITE_DEV_SERVER_URL ?? "http://127.0.0.1:8080";
+
     return {
       fallback: [
         {
-          source: "/:path*",
-          destination: `${vite}/:path*`,
+          source: "/:path((?!api|_next|assets|favicon.ico|.*\\..*).*)",
+          destination: "/index.html",
         },
       ],
     };
