@@ -1,30 +1,62 @@
-# نشر المشروع على Vercel (خطوات مهمة)
+# نشر المشروع على Vercel
 
-## إذا ظهر خطأ `dist/routes-manifest.json couldn't be found`
+## الطريقة الأوتوماتيك (مرة واحدة)
 
-سبب الخطأ: حقل **Output Directory** في Vercel مضبوط على `dist` بينما Next.js يبني في `.next`.
+### 1) إنشاء Token من Vercel
 
-### الحل (من لوحة Vercel)
+1. [https://vercel.com/account/tokens](https://vercel.com/account/tokens)
+2. **Create** → اسم مثل `privanta-setup` → انسخ التوكن
 
-1. افتح المشروع **privanta-site** على [vercel.com](https://vercel.com)
-2. **Settings** → **Build and Deployment**
-3. انزل إلى **Output Directory**
-4. **امسح الحقل بالكامل** (اتركه فاضي — لا تكتب `dist` ولا `.next`)
-5. تأكد **Framework Preset** = **Next.js**
-6. **Build Command** = `node scripts/vercel-build.mjs` (أو اتركه من `vercel.json`)
-7. **Save**
-8. **Deployments** → **Redeploy**
+### 2) جهّز ملف `.env` محلياً
 
-### Node.js
+انسخ `.env.example` إلى `.env` واملأ القيم (Neon, Resend, Upstash).
 
-**Settings** → **General** → **Node.js Version** → **20.x**
+### 3) شغّل السكربت
 
-### متغيرات البيئة (Production)
+**PowerShell:**
 
-| المتغير | مثال |
-|---------|------|
-| `NEXT_PUBLIC_APP_URL` | `https://privanta-site.vercel.app` |
-| `DATABASE_URL` | من Neon |
-| `RESEND_API_KEY` | من Resend |
-| `UPSTASH_REDIS_REST_URL` | من Upstash |
-| `UPSTASH_REDIS_REST_TOKEN` | من Upstash |
+```powershell
+cd "c:\Users\Moataz\Downloads\privanta site"
+
+$env:VERCEL_TOKEN = "ضع_التوكن_هنا"
+$env:VERCEL_PROJECT = "privanta-site"
+
+npm run vercel:setup
+```
+
+السكربت يعمل تلقائياً:
+
+- يمسح **Output Directory** (يضبط `null` = Next.js auto)
+- **Node.js 20.x**
+- **Build Command** = `node scripts/vercel-build.mjs`
+- يرفع متغيرات `.env` إلى Vercel (مشفّرة)
+- يطلق **Production deployment**
+
+**لو المشروع تحت Team:**
+
+```powershell
+$env:VERCEL_TEAM_ID = "team_xxxxxxxx"
+```
+
+**بدون إعادة نشر:**
+
+```powershell
+$env:VERCEL_REDEPLOY = "0"
+npm run vercel:setup
+```
+
+---
+
+## يدوي (لو السكربت مش متاح)
+
+**Settings → Build and Deployment → Output Directory** → **فاضي** → Save → Redeploy
+
+---
+
+## بعد النشر
+
+```powershell
+npm run db:push
+```
+
+(مرة واحدة على قاعدة Neon — من جهازك مع `DATABASE_URL` في `.env`)

@@ -13,6 +13,7 @@
     "build": "vite build",
     "build:api": "prisma generate && next build",
     "build:vercel": "node scripts/vercel-build.mjs",
+    "vercel:setup": "node scripts/vercel-setup.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"lib/**/*.{ts,mjs}\" \"app/**/*.{ts,tsx}\"",
