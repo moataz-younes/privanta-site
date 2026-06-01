@@ -104,7 +104,7 @@ const Index = () => {
       {/* ──────────── HERO ──────────── */}
       <section
         id="home"
-        className="home-strip-hero relative flex flex-col overflow-hidden"
+        className="home-strip-hero relative isolate flex flex-col overflow-hidden"
       >
         <HeroAtmosphere />
 
@@ -788,12 +788,13 @@ const Index = () => {
                   className="compliance-logo-item"
                   aria-hidden={idx >= complianceLogos.length}
                 >
-                  <img
-                    src={logo.src}
-                    alt={idx < complianceLogos.length ? logo.name : ""}
-                    className={getComplianceLogoClassName(logo.size)}
-                    loading="lazy"
-                  />
+                    <img
+                      src={logo.src}
+                      alt={idx < complianceLogos.length ? logo.name : ""}
+                      className={getComplianceLogoClassName(logo.size)}
+                      loading="eager"
+                      decoding="async"
+                    />
                 </div>
               ))}
             </div>

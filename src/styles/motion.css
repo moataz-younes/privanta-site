@@ -225,6 +225,7 @@ html::-webkit-scrollbar-corner {
 .privanta-navbar-shell.is-booting {
   opacity: 0;
   filter: blur(6px);
+  pointer-events: none;
   animation: privanta-boot-fade 0.9s var(--motion-ease-cinematic) 0.18s forwards;
 }
 
@@ -609,6 +610,14 @@ html::-webkit-scrollbar-corner {
 
 .platform-dashboard-glow {
   animation: privanta-dashboard-glow 5s ease-in-out infinite;
+}
+
+@media (max-width: 767px) {
+  .platform-dashboard-glow {
+    inset: 12% 8%;
+    opacity: 0.28 !important;
+    filter: blur(28px);
+  }
 }
 
 @keyframes privanta-dashboard-glow {

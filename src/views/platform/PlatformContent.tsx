@@ -253,7 +253,8 @@ const PlatformContent = ({ isSubdomain: _isSubdomain = false }: PlatformContentP
                       src={logo.src}
                       alt={idx < complianceLogos.length ? logo.name : ""}
                       className={getComplianceLogoClassName(logo.size)}
-                      loading="lazy"
+                      loading="eager"
+                      decoding="async"
                     />
                   </div>
                 ))}

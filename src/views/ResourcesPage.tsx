@@ -53,7 +53,7 @@ export default function ResourcesPage() {
       </section>
 
       <section className="container-privanta pb-4 pt-8 md:pt-10">
-        <div className="flex flex-wrap gap-2">
+        <div className="resources-filters">
           {filterOptions.map((opt) => (
             <button
               key={opt.key}

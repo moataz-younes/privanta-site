@@ -14,7 +14,7 @@ const PARTICLE_POSITIONS: Array<{ left: string; top: string; delay: string }> = 
  * Light readability scrim and soft vignette — immersive, enterprise-grade.
  */
 const HeroAtmosphere = () => (
-  <div className="privanta-hero-atmosphere pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+  <div className="privanta-hero-atmosphere pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
     <div className="privanta-hero-photo" role="presentation" />
     <div className="privanta-hero-grid-overlay" />
     <div className="privanta-hero-wave" />

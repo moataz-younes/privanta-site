@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
@@ -257,22 +258,23 @@ const Navbar = ({ variant = "main" }: NavbarProps) => {
             </div>
           )}
 
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="relative z-[10002] flex shrink-0 items-center gap-2">
             <button
               type="button"
-              className="locale-switch-motion rounded-full border border-[rgba(47,191,204,0.14)] px-2.5 py-1 text-[13px] font-mono text-[#A8B8C4] hover:bg-[rgba(47,191,204,0.05)]"
+              className="locale-switch-motion touch-manipulation rounded-full border border-[rgba(47,191,204,0.14)] px-2.5 py-1 text-[13px] font-mono text-[#A8B8C4] hover:bg-[rgba(47,191,204,0.05)]"
               onClick={() => applyLocale(nextLocale)}
             >
               {localeLabel}
             </button>
             <button
               type="button"
-              className="rounded-lg p-2 text-[var(--text-primary)] lg:hidden"
+              className="touch-manipulation rounded-lg p-2 text-[var(--text-primary)] lg:hidden"
               aria-expanded={mobileOpen}
-              aria-label="Menu"
-              onClick={() => setMobileOpen(true)}
+              aria-controls="privanta-mobile-nav"
+              aria-label={mobileOpen ? (locale === "ar" ? "إغلاق القائمة" : "Close menu") : locale === "ar" ? "فتح القائمة" : "Open menu"}
+              onClick={() => setMobileOpen((open) => !open)}
             >
-              <Menu className="h-5 w-5" />
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </nav>
@@ -292,36 +294,45 @@ const Navbar = ({ variant = "main" }: NavbarProps) => {
         </div>
       </div>
 
-        <AnimatePresence>
-        {mobileOpen && (
-          <>
-          <motion.button
-            type="button"
-            className="fixed inset-0 z-[10000] bg-black/60 lg:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setMobileOpen(false)}
-          />
-          <motion.div
-            initial={{ x: drawerDirectionClass === "rtl" ? "-100%" : "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: drawerDirectionClass === "rtl" ? "-100%" : "100%" }}
-            transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed inset-y-0 end-0 z-[10001] flex w-72 flex-col border-s border-[rgba(47,191,204,0.08)] bg-[#0D1A26] shadow-2xl lg:hidden"
-          >
-            <div className="flex items-center justify-between border-b border-[var(--border-sub)] px-4 py-3">
-              <span className="text-sm font-semibold tracking-wide text-[var(--text-primary)]">Menu</span>
-              <button
-                type="button"
-                className="rounded-lg p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-                aria-label="Close menu"
-                onClick={() => setMobileOpen(false)}
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-            <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-3">
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {mobileOpen ? (
+              <>
+                <motion.button
+                  type="button"
+                  className="fixed inset-0 z-[10000] bg-black/60 touch-manipulation lg:hidden"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  aria-label={locale === "ar" ? "إغلاق القائمة" : "Close menu"}
+                  onClick={() => setMobileOpen(false)}
+                />
+                <motion.div
+                  id="privanta-mobile-nav"
+                  role="dialog"
+                  aria-modal="true"
+                  aria-label={locale === "ar" ? "القائمة" : "Menu"}
+                  initial={{ x: drawerDirectionClass === "rtl" ? "-100%" : "100%" }}
+                  animate={{ x: 0 }}
+                  exit={{ x: drawerDirectionClass === "rtl" ? "-100%" : "100%" }}
+                  transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
+                  className="fixed inset-y-0 end-0 z-[10001] flex h-dvh max-h-dvh w-[min(18rem,88vw)] flex-col border-s border-[rgba(47,191,204,0.08)] bg-[#0D1A26] shadow-2xl lg:hidden"
+                >
+                  <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-sub)] px-4 py-3">
+                    <span className="text-sm font-semibold tracking-wide text-[var(--text-primary)]">
+                      {locale === "ar" ? "القائمة" : "Menu"}
+                    </span>
+                    <button
+                      type="button"
+                      className="touch-manipulation rounded-lg p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                      aria-label={locale === "ar" ? "إغلاق" : "Close"}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                  <nav className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
               {variant === "main" ? (
                 <>
                   <NavLink
@@ -453,11 +464,13 @@ const Navbar = ({ variant = "main" }: NavbarProps) => {
                   {locale === "ar" ? "احجز عرضًا" : "Book a Demo"}
                 </a>
               )}
-            </nav>
-          </motion.div>
-          </>
+                  </nav>
+                </motion.div>
+              </>
+            ) : null}
+          </AnimatePresence>,
+          document.body,
         )}
-        </AnimatePresence>
     </header>
   );
 };
