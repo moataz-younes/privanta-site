@@ -1,0 +1,17 @@
+{
+  "slug": "nca-ecc-v2-changes",
+  "categoryKey": "regulatory",
+  "order": 5,
+  "published": true,
+  "category": { "en": "Regulatory Update", "ar": "تحديث تنظيمي" },
+  "title": {
+    "en": "NCA ECC v2.0: Key Changes and Implementation Timeline",
+    "ar": "NCA ECC v2.0: تغييرات رئيسية وجدول زمني للتنفيذ"
+  },
+  "description": {
+    "en": "The Essential Cybersecurity Controls update is here. What changed, what stayed, and what to prioritize.",
+    "ar": "تحديث ضوابط الأمن السيبراني الأساسية هنا. ما تغيّر، ما بقي، وما يجب إعطاؤه الأولوية."
+  },
+  "date": { "en": "March 2025", "ar": "مارس 2025" },
+  "readTime": { "en": "7 min read", "ar": "7 دقائق قراءة" }
+}

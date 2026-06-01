@@ -1,0 +1,47 @@
+// Privanta lead management — ContactRequest model
+// Prepared for future Admin Dashboard queries and multi-source lead capture.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Admin Dashboard preparation (future)
+// ---------------------------------------------------------------------------
+// - status: pipeline stages for leads — New / Contacted / Qualified / Closed
+// - source: identifies form origin (contact-form today; more origins later)
+// - @@index([status]): filter and group leads by pipeline stage in the dashboard
+// - @@index([createdAt]): sort and paginate recent submissions
+// - @@index([workEmail]): dedupe lookups and search by email
+// ---------------------------------------------------------------------------
+
+enum ContactStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CLOSED
+}
+
+model ContactRequest {
+  id        String        @id @default(uuid())
+  fullName  String
+  workEmail String
+  company   String
+  interest  String
+  message   String
+  jobTitle  String?
+  country   String?
+  source    String        @default("contact-form")
+  status    ContactStatus @default(NEW)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([workEmail])
+}

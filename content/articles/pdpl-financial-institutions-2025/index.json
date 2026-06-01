@@ -1,0 +1,17 @@
+{
+  "slug": "pdpl-financial-institutions-2025",
+  "categoryKey": "regulatory",
+  "order": 1,
+  "published": true,
+  "category": { "en": "Regulatory Update", "ar": "تحديث تنظيمي" },
+  "title": {
+    "en": "What Saudi PDPL Means for Financial Institutions in 2025",
+    "ar": "ماذا يعني PDPL السعودي للمؤسسات المالية في 2025"
+  },
+  "description": {
+    "en": "A practical breakdown of latest PDPL enforcement guidelines and what compliance teams need to implement immediately.",
+    "ar": "تحليل عملي لأحدث إرشادات فرض PDPL وما تحتاج فرق الامتثال لتطبيقه فوراً."
+  },
+  "date": { "en": "May 2025", "ar": "مايو 2025" },
+  "readTime": { "en": "8 min read", "ar": "8 دقائق قراءة" }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Privanta",
+  "short_name": "Privanta",
+  "description": "Turning Compliance into Trust — enterprise GRC, privacy, and compliance platform.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070e1c",
+  "theme_color": "#2fbfc8",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/logoo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

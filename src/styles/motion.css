@@ -1,0 +1,780 @@
+/* ─── Privanta Motion System (enterprise GRC platform) ─── */
+
+/* Scrollbar — Book a Demo inspired (vertical site navigation) */
+html {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #4dd9c8 rgba(7, 14, 28, 0.92);
+}
+
+html::-webkit-scrollbar {
+  width: 11px;
+}
+
+html::-webkit-scrollbar-track {
+  background: linear-gradient(
+    180deg,
+    rgba(5, 10, 20, 0.98) 0%,
+    rgba(7, 14, 28, 0.94) 50%,
+    rgba(5, 10, 20, 0.98) 100%
+  );
+  border-inline-start: 1px solid rgba(99, 240, 221, 0.08);
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.35);
+}
+
+html::-webkit-scrollbar-thumb {
+  min-height: 72px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: linear-gradient(
+    180deg,
+    #8ffdf0 0%,
+    #63f0dd 38%,
+    #2fbfc8 72%,
+    #63f0dd 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(99, 240, 221, 0.28),
+    0 0 14px rgba(99, 240, 221, 0.42),
+    0 0 28px rgba(47, 191, 204, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  animation: privanta-scrollbar-glow 4.2s ease-in-out infinite;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  filter: brightness(1.1) saturate(1.05);
+  border-color: rgba(255, 255, 255, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 0 22px rgba(99, 240, 221, 0.58),
+    0 0 44px rgba(47, 191, 204, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+html::-webkit-scrollbar-thumb:active {
+  filter: brightness(1.05);
+  background: linear-gradient(
+    180deg,
+    #63f0dd 0%,
+    #2fbfc8 50%,
+    #4dd9c8 100%
+  );
+}
+
+html::-webkit-scrollbar-corner {
+  background: rgba(7, 14, 28, 0.98);
+}
+
+@keyframes privanta-scrollbar-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(99, 240, 221, 0.28),
+      0 0 12px rgba(99, 240, 221, 0.36),
+      0 0 24px rgba(47, 191, 204, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.32);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.26),
+      0 0 20px rgba(99, 240, 221, 0.52),
+      0 0 40px rgba(47, 191, 204, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+}
+
+:root {
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --motion-duration-fast: 0.4s;
+  --motion-duration-base: 0.55s;
+  --motion-duration-slow: 0.75s;
+  --motion-duration-cinematic: 1.05s;
+}
+
+/* Scroll progress — operational telemetry strip */
+.privanta-scroll-progress {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  z-index: 10002;
+  height: 2px;
+  transform-origin: 0 50%;
+  background: linear-gradient(
+    90deg,
+    rgba(23, 48, 108, 0.4) 0%,
+    rgba(99, 240, 221, 0.85) 55%,
+    rgba(124, 92, 255, 0.5) 100%
+  );
+  box-shadow: 0 0 12px rgba(99, 240, 221, 0.35);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s var(--motion-ease);
+}
+
+.privanta-scroll-progress.is-visible {
+  opacity: 1;
+}
+
+/* Page boot — system initializing */
+@keyframes privanta-boot-fade {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes privanta-boot-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes privanta-boot-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.home-page.privanta-home-boot .privanta-hero-photo,
+.home-page.privanta-home-boot .privanta-hero-wave,
+.home-page.privanta-home-boot .privanta-hero-grid-overlay {
+  opacity: 0;
+  animation: privanta-boot-fade 1.15s var(--motion-ease-cinematic) forwards;
+}
+
+.home-page.privanta-home-boot .privanta-hero-wave {
+  animation-delay: 0.12s;
+}
+
+.home-page.privanta-home-boot .privanta-hero-grid-overlay {
+  animation-delay: 0.08s;
+}
+
+.home-page.privanta-home-boot .privanta-hero-particles span {
+  opacity: 0;
+  animation: privanta-boot-fade 1.4s var(--motion-ease) forwards;
+}
+
+.home-page.privanta-home-boot .hero-entry-stack > * {
+  animation-name: privanta-boot-rise;
+  animation-duration: 0.85s;
+  animation-timing-function: var(--motion-ease-cinematic);
+  animation-fill-mode: both;
+}
+
+.home-page.privanta-home-boot .hero-entry-stack > *:nth-child(1) {
+  animation-delay: 0.35s;
+}
+.home-page.privanta-home-boot .hero-entry-stack > *:nth-child(2) {
+  animation-delay: 0.48s;
+}
+.home-page.privanta-home-boot .hero-entry-stack > *:nth-child(3) {
+  animation-delay: 0.58s;
+}
+.home-page.privanta-home-boot .hero-entry-stack > *:nth-child(4) {
+  animation-delay: 0.68s;
+}
+
+.home-page.privanta-home-boot .btn-demo {
+  animation:
+    privanta-boot-rise 0.7s var(--motion-ease-cinematic) 0.72s both,
+    btn-demo-glow 4.2s ease-in-out 1.4s infinite;
+}
+
+/* Navbar — glass float, scroll hide, link underline */
+.privanta-navbar-shell {
+  transition:
+    transform 0.55s var(--motion-ease),
+    opacity 0.45s var(--motion-ease),
+    backdrop-filter 0.5s var(--motion-ease),
+    background-color 0.5s var(--motion-ease),
+    border-color 0.45s var(--motion-ease),
+    box-shadow 0.5s var(--motion-ease);
+  will-change: transform, opacity;
+}
+
+.privanta-navbar-shell.is-scrolled {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.privanta-navbar-shell.is-hidden {
+  transform: translate3d(0, -100%, 0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.privanta-navbar-shell.is-booting {
+  opacity: 0;
+  filter: blur(6px);
+  animation: privanta-boot-fade 0.9s var(--motion-ease-cinematic) 0.18s forwards;
+}
+
+.nav-link-motion {
+  position: relative;
+}
+
+.nav-link-motion::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0.65rem;
+  bottom: 0.35rem;
+  height: 1px;
+  border-radius: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan-accent), transparent);
+  transform: scaleX(0);
+  opacity: 0;
+  transition:
+    transform 0.45s var(--motion-ease),
+    opacity 0.45s var(--motion-ease);
+}
+
+.nav-link-motion:hover::after,
+.nav-link-motion.nav-active::after {
+  transform: scaleX(1);
+  opacity: 0.85;
+}
+
+.nav-link-motion.nav-active {
+  text-shadow: 0 0 20px rgba(99, 240, 221, 0.15);
+}
+
+.btn-demo-motion {
+  transition:
+    transform 0.35s var(--motion-ease),
+    box-shadow 0.45s var(--motion-ease),
+    filter 0.35s var(--motion-ease);
+}
+
+.btn-demo-motion:hover {
+  transform: translate3d(0, -2px, 0);
+}
+
+.btn-demo-motion:active {
+  transform: translate3d(0, 0, 0) scale(0.98);
+}
+
+.btn-outline-motion {
+  transition:
+    transform 0.4s var(--motion-ease),
+    box-shadow 0.45s var(--motion-ease),
+    border-color 0.4s var(--motion-ease);
+}
+
+.btn-outline-motion:hover {
+  transform: translate3d(0, -2px, 0);
+}
+
+.btn-outline-motion:active {
+  transform: translate3d(0, 0, 0) scale(0.985);
+}
+
+.locale-switch-motion {
+  transition:
+    opacity 0.35s var(--motion-ease),
+    border-color 0.4s var(--motion-ease),
+    box-shadow 0.45s var(--motion-ease),
+    background-color 0.4s var(--motion-ease);
+}
+
+.locale-switch-motion:hover {
+  border-color: rgba(99, 240, 221, 0.38);
+  box-shadow: 0 0 16px rgba(99, 240, 221, 0.12);
+}
+
+/* Hero atmosphere extensions */
+.privanta-hero-grid-overlay {
+  position: absolute;
+  inset: -4%;
+  opacity: 0;
+  background-image:
+    linear-gradient(rgba(99, 240, 221, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 240, 221, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, #000 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 45%, #000 0%, transparent 72%);
+  animation: privanta-hero-grid-drift 48s ease-in-out infinite;
+}
+
+@keyframes privanta-hero-grid-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.14;
+  }
+  50% {
+    transform: translate3d(-1.2%, 0.6%, 0);
+    opacity: 0.22;
+  }
+}
+
+.privanta-hero-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.privanta-hero-particles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(99, 240, 221, 0.35);
+  box-shadow: 0 0 8px rgba(99, 240, 221, 0.25);
+  animation: privanta-particle-float 14s ease-in-out infinite;
+}
+
+.privanta-hero-particles span:nth-child(odd) {
+  background: rgba(124, 92, 255, 0.28);
+  animation-duration: 18s;
+}
+
+@keyframes privanta-particle-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate3d(8px, -12px, 0);
+    opacity: 0.45;
+  }
+}
+
+/* Section ambient transitions */
+.motion-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.motion-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    ellipse 70% 45% at 50% 0%,
+    rgba(99, 240, 221, 0.04) 0%,
+    transparent 65%
+  );
+  transition: opacity 1s var(--motion-ease);
+}
+
+.motion-section.is-inview::before {
+  opacity: 1;
+}
+
+.motion-section-separator {
+  position: relative;
+}
+
+.motion-section-separator::after {
+  content: "";
+  position: absolute;
+  inset-inline: 10%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(99, 240, 221, 0.12) 30%,
+    rgba(99, 240, 221, 0.22) 50%,
+    rgba(99, 240, 221, 0.12) 70%,
+    transparent
+  );
+  opacity: 0.6;
+}
+
+/* Enterprise cards — stagger reveal hooks */
+.motion-card-hover {
+  transition:
+    transform 0.45s var(--motion-ease),
+    border-color 0.45s var(--motion-ease),
+    box-shadow 0.5s var(--motion-ease),
+    background-color 0.45s var(--motion-ease);
+}
+
+.motion-card-hover:hover {
+  transform: translate3d(0, -3px, 0);
+  border-color: rgba(99, 240, 221, 0.22);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.32),
+    0 0 24px rgba(99, 240, 221, 0.06);
+}
+
+.home-page .home-strip-icon.motion-icon-pulse {
+  transition: box-shadow 0.5s var(--motion-ease);
+}
+
+.home-page .motion-card-hover:hover .home-strip-icon.motion-icon-pulse {
+  box-shadow: 0 0 18px rgba(99, 240, 221, 0.2);
+  animation: privanta-icon-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes privanta-icon-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.82;
+  }
+}
+
+/* Framework logos — grayscale to color */
+.compliance-logo-item img {
+  filter:
+    grayscale(0.35)
+    saturate(0.85)
+    contrast(1.06)
+    drop-shadow(0 0 16px rgba(99, 240, 221, 0.12))
+    drop-shadow(0 10px 18px rgba(0, 0, 0, 0.24));
+  transition:
+    opacity 0.45s var(--motion-ease),
+    filter 0.5s var(--motion-ease),
+    transform 0.45s var(--motion-ease);
+}
+
+.compliance-logo-item:hover img {
+  filter:
+    grayscale(0)
+    saturate(1.04)
+    contrast(1.08)
+    drop-shadow(0 0 22px rgba(99, 240, 221, 0.2))
+    drop-shadow(0 14px 24px rgba(0, 0, 0, 0.32));
+}
+
+/* Final CTA cinematic band */
+.home-cta-cinematic {
+  position: relative;
+  overflow: hidden;
+}
+
+.home-cta-cinematic::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 100%,
+    rgba(99, 240, 221, 0.12) 0%,
+    transparent 70%
+  );
+  animation: privanta-cta-wave 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.home-cta-cinematic::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: -30%;
+  height: 40%;
+  z-index: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(99, 240, 221, 0.06) 45%,
+    rgba(255, 255, 255, 0.04) 50%,
+    transparent 55%
+  );
+  animation: privanta-cta-sweep 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes privanta-cta-wave {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate3d(0, -2%, 0) scale(1.03);
+    opacity: 0.85;
+  }
+}
+
+@keyframes privanta-cta-sweep {
+  0% {
+    transform: translate3d(-40%, 0, 0);
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.7;
+  }
+  70% {
+    transform: translate3d(140%, 0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(140%, 0, 0);
+    opacity: 0;
+  }
+}
+
+/* Footer ambient */
+.privanta-footer-ambient {
+  position: relative;
+  overflow: hidden;
+}
+
+.privanta-footer-ambient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 120%,
+    rgba(99, 240, 221, 0.04) 0%,
+    transparent 55%
+  );
+  animation: privanta-footer-glow 16s ease-in-out infinite;
+}
+
+@keyframes privanta-footer-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+.footer-link-motion {
+  transition:
+    color 0.35s var(--motion-ease),
+    text-shadow 0.45s var(--motion-ease),
+    transform 0.35s var(--motion-ease);
+}
+
+.footer-link-motion:hover {
+  transform: translate3d(2px, 0, 0);
+  text-shadow: 0 0 16px rgba(99, 240, 221, 0.2);
+}
+
+[dir="rtl"] .footer-link-motion:hover {
+  transform: translate3d(-2px, 0, 0);
+}
+
+.footer-social-motion {
+  transition:
+    transform 0.4s var(--motion-ease),
+    border-color 0.45s var(--motion-ease),
+    box-shadow 0.5s var(--motion-ease),
+    color 0.35s var(--motion-ease),
+    background-color 0.4s var(--motion-ease);
+}
+
+.footer-social-motion:hover {
+  transform: translate3d(0, -2px, 0);
+  box-shadow: 0 0 20px rgba(99, 240, 221, 0.18);
+}
+
+/* Dashboard — live platform UI */
+.platform-dashboard-float {
+  animation: privanta-dashboard-float 9s ease-in-out infinite;
+}
+
+@keyframes privanta-dashboard-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+.platform-dashboard-glow {
+  animation: privanta-dashboard-glow 5s ease-in-out infinite;
+}
+
+@keyframes privanta-dashboard-glow {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+.platform-live-indicator {
+  animation: privanta-live-blink 2.4s ease-in-out infinite;
+}
+
+@keyframes privanta-live-blink {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(99, 240, 221, 0.4);
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 0 4px rgba(99, 240, 221, 0);
+  }
+}
+
+.platform-metric-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.platform-metric-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(99, 240, 221, 0.08) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  animation: privanta-shimmer 6s ease-in-out infinite;
+}
+
+@keyframes privanta-shimmer {
+  0%,
+  70% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.platform-notification-pulse {
+  animation: privanta-notification-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes privanta-notification-pulse {
+  0%,
+  100% {
+    border-color: rgba(99, 240, 221, 0.15);
+  }
+  50% {
+    border-color: rgba(99, 240, 221, 0.35);
+  }
+}
+
+/* Parallax layers — backgrounds only */
+.motion-parallax-bg {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html::-webkit-scrollbar-thumb {
+    animation: none;
+  }
+
+  .privanta-scroll-progress,
+  .privanta-navbar-shell.is-hidden,
+  .home-page.privanta-home-boot .privanta-hero-photo,
+  .home-page.privanta-home-boot .privanta-hero-wave,
+  .home-page.privanta-home-boot .privanta-hero-grid-overlay,
+  .home-page.privanta-home-boot .privanta-hero-particles span,
+  .home-page.privanta-home-boot .hero-entry-stack > *,
+  .privanta-hero-grid-overlay,
+  .privanta-hero-particles span,
+  .home-cta-cinematic::before,
+  .home-cta-cinematic::after,
+  .privanta-footer-ambient::before,
+  .platform-dashboard-float,
+  .platform-dashboard-glow,
+  .platform-live-indicator,
+  .platform-metric-shimmer::after,
+  .platform-notification-pulse {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .privanta-navbar-shell.is-booting {
+    opacity: 1;
+    filter: none;
+  }
+
+  .motion-card-hover:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .privanta-hero-particles span {
+    opacity: 0.25;
+  }
+
+  .motion-parallax-bg {
+    transform: none !important;
+  }
+
+  .home-cta-cinematic::after {
+    animation-duration: 12s;
+  }
+}
+
+/* Site-wide enterprise surfaces */
+.enterprise-page .surface-card,
+.enterprise-page .card-feature,
+.enterprise-page .glass-card,
+.enterprise-page .enterprise-card {
+  transition:
+    transform 0.45s var(--motion-ease),
+    border-color 0.45s var(--motion-ease),
+    box-shadow 0.5s var(--motion-ease);
+}
+
+.enterprise-page .surface-card:hover,
+.enterprise-page .card-feature:hover,
+.enterprise-page .glass-card:hover,
+.enterprise-page .enterprise-card:hover {
+  transform: translate3d(0, -2px, 0);
+}
+
+.compliance-marquee-grid {
+  animation: privanta-marquee-grid-drift 56s ease-in-out infinite;
+}
+
+@keyframes privanta-marquee-grid-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translate3d(-2%, 1%, 0);
+    opacity: 0.16;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compliance-marquee-grid {
+    animation: none;
+  }
+}

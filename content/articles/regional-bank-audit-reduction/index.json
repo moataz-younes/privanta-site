@@ -1,0 +1,17 @@
+{
+  "slug": "regional-bank-audit-reduction",
+  "categoryKey": "case-study",
+  "order": 4,
+  "published": true,
+  "category": { "en": "Case Study", "ar": "دراسة حالة" },
+  "title": {
+    "en": "How a Regional Bank Reduced Audit Preparation Time by 40%",
+    "ar": "كيف قلل بنك إقليمي وقت تحضير التدقيق بنسبة 40%"
+  },
+  "description": {
+    "en": "A detailed look at how Privanta implemented a continuous compliance model for a SAMA-regulated institution.",
+    "ar": "نظرة مفصلة على كيفية تطبيق Privanta لنموذج امتثال مستمر لمؤسسة خاضعة لرقابة ساما."
+  },
+  "date": { "en": "March 2025", "ar": "مارس 2025" },
+  "readTime": { "en": "12 min read", "ar": "12 دقيقة قراءة" }
+}

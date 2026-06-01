@@ -1,0 +1,17 @@
+{
+  "slug": "eu-ai-act-nist-comparison",
+  "categoryKey": "ai",
+  "order": 6,
+  "published": true,
+  "category": { "en": "AI Governance", "ar": "حوكمة الذكاء الاصطناعي" },
+  "title": {
+    "en": "EU AI Act vs. NIST AI RMF: Which Framework Is Right for You?",
+    "ar": "EU AI Act مقابل NIST AI RMF: أي إطار مناسب لك؟"
+  },
+  "description": {
+    "en": "A comparison of two leading AI governance frameworks and how to choose your starting point.",
+    "ar": "مقارنة بين إطارين رئيسيين لحوكمة الذكاء الاصطناعي وكيفية اختيار نقطة البداية."
+  },
+  "date": { "en": "February 2025", "ar": "فبراير 2025" },
+  "readTime": { "en": "9 min read", "ar": "9 دقائق قراءة" }
+}

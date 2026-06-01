@@ -1,0 +1,17 @@
+{
+  "slug": "control-gap-enforcement",
+  "categoryKey": "security",
+  "order": 3,
+  "published": true,
+  "category": { "en": "Security Insights", "ar": "رؤى أمنية" },
+  "title": {
+    "en": "The Control Gap: Why Policies Fail Without Technical Enforcement",
+    "ar": "فجوة التحكم: لماذا تفشل السياسات بدون الفرض التقني"
+  },
+  "description": {
+    "en": "Most compliance failures aren't policy failures — they're enforcement failures. Here's how to fix the gap.",
+    "ar": "معظم إخفاقات الامتثال ليست إخفاقات سياسات بل إخفاقات فرض. إليك كيفية إصلاح الفجوة."
+  },
+  "date": { "en": "April 2025", "ar": "أبريل 2025" },
+  "readTime": { "en": "6 min read", "ar": "6 دقائق قراءة" }
+}

@@ -1,0 +1,17 @@
+{
+  "slug": "ai-risk-register-framework",
+  "categoryKey": "ai",
+  "order": 2,
+  "published": true,
+  "category": { "en": "AI Governance", "ar": "حوكمة الذكاء الاصطناعي" },
+  "title": {
+    "en": "Building an AI Risk Register: A Step-by-Step Framework",
+    "ar": "بناء سجل مخاطر الذكاء الاصطناعي: إطار خطوة بخطوة"
+  },
+  "description": {
+    "en": "How to identify, classify, and govern AI systems across your organization before regulators force the issue.",
+    "ar": "كيفية تحديد وتصنيف وحوكمة أنظمة الذكاء الاصطناعي عبر مؤسستك قبل أن تجبرك الجهات التنظيمية."
+  },
+  "date": { "en": "April 2025", "ar": "أبريل 2025" },
+  "readTime": { "en": "10 min read", "ar": "10 دقائق قراءة" }
+}
