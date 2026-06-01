@@ -9,7 +9,7 @@ const marqueeLogos = [...complianceLogos, ...complianceLogos];
 export function ComplianceFrameworkLogos({ ariaLabel }: ComplianceFrameworkLogosProps) {
   return (
     <>
-      <div className="compliance-logos-mobile md:hidden" aria-label={ariaLabel}>
+      <div className="compliance-logos-mobile lg:hidden" aria-label={ariaLabel}>
         <ul className="compliance-logos-mobile__grid">
           {complianceLogos.map((logo) => (
             <li key={logo.name} className="compliance-logos-mobile__item">
@@ -25,7 +25,7 @@ export function ComplianceFrameworkLogos({ ariaLabel }: ComplianceFrameworkLogos
         </ul>
       </div>
 
-      <div className="compliance-marquee-mask mt-5 hidden md:block" aria-label={ariaLabel}>
+      <div className="compliance-marquee-mask mt-5 hidden lg:block" aria-label={ariaLabel}>
         <div className="compliance-marquee-track">
           {marqueeLogos.map((logo, idx) => (
             <div

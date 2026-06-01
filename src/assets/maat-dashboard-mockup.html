@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MAAT AI Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #070e1c; font-family: 'Cairo', sans-serif; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  .wrap { font-family: 'Cairo', sans-serif; background: #0a0f1e; border-radius: 16px; padding: 0; overflow: hidden; direction: rtl; }
+  .screen-outer { background: linear-gradient(135deg, #0d1829 0%, #0a0f1e 60%, #0d1c2e 100%); border-radius: 16px; padding: 28px 28px 0 28px; box-shadow: 0 0 0 1px #1e2d4a; }
+  .glow-bar { height: 3px; background: linear-gradient(90deg, #c9a84c 0%, #e8c76b 40%, #c9a84c 100%); border-radius: 2px; }
+  .browser-bar { background: #111827; border-radius: 10px 10px 0 0; padding: 10px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #1e2d4a; direction: ltr; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .dot-r { background: #ff5f56; } .dot-y { background: #ffbd2e; } .dot-g { background: #27c93f; }
+  .screen { background: #0b1220; border-radius: 0 0 8px 8px; overflow: hidden; }
+  .topbar { background: #0f1c30; border-bottom: 1px solid #1a2d45; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .logo-text { color: #e8c76b; font-weight: 700; font-size: 16px; letter-spacing: 2px; }
+  .logo-sub { color: #4a6a8a; font-size: 10px; }
+  .top-badges { display: flex; gap: 6px; }
+  .badge { border: 1px solid #1e4a3a; color: #3dd68c; font-size: 9px; padding: 3px 8px; border-radius: 4px; }
+  .badge-b { border-color: #1e3a5a; color: #5aabe6; }
+  .nav { background: #0d1829; border-bottom: 1px solid #142035; padding: 0 16px; display: flex; gap: 2px; overflow: hidden; justify-content: flex-end; }
+  .nav-item { color: #4a6a8a; font-size: 10px; padding: 8px 10px; white-space: nowrap; border-bottom: 2px solid transparent; }
+  .nav-item.active { color: #e8c76b; border-bottom: 2px solid #e8c76b; }
+  .body { display: flex; height: 280px; flex-direction: row; }
+  .sidebar { width: 38px; background: #0a1020; border-left: 1px solid #142035; display: flex; flex-direction: column; align-items: center; padding: 12px 0; gap: 16px; order: -1; }
+  .s-icon { width: 20px; height: 20px; border-radius: 4px; background: #1a2d45; display: flex; align-items: center; justify-content: center; }
+  .s-icon.active { background: #c9a84c22; }
+  .s-dot { width: 6px; height: 6px; border-radius: 50%; background: #3dd68c; margin-top: auto; }
+  .main { flex: 1; padding: 12px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+  .stats-row { display: flex; gap: 8px; flex-direction: row-reverse; }
+  .stat-card { flex: 1; background: #0f1c30; border: 1px solid #1a2d45; border-radius: 8px; padding: 8px 10px; text-align: right; }
+  .stat-val { color: #e8c76b; font-size: 18px; font-weight: 700; line-height: 1; }
+  .stat-val.white { color: #c8d8f0; } .stat-val.green { color: #3dd68c; }
+  .stat-label { color: #4a6a8a; font-size: 9px; margin-top: 4px; }
+  .stat-badge { display: inline-block; background: #ff4a4a22; color: #ff6b6b; font-size: 8px; padding: 1px 5px; border-radius: 3px; margin-top: 3px; }
+  .mid-row { display: flex; gap: 8px; flex: 1; overflow: hidden; flex-direction: row-reverse; align-items: flex-start; }
+  .welcome-card { flex: 1.4; background: #0f1c30; border: 1px solid #1a2d45; border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; justify-content: space-between; text-align: right; align-self: stretch; min-height: 0; }
+  .welcome-title { color: #c8d8f0; font-size: 13px; font-weight: 700; }
+  .welcome-sub { color: #4a6a8a; font-size: 9px; margin-top: 2px; }
+  .btn-row { display: flex; gap: 6px; margin-top: 8px; flex-direction: row-reverse; }
+  .btn-gold { background: #c9a84c; color: #0a0f1e; font-size: 9px; padding: 5px 10px; border-radius: 5px; font-weight: 700; white-space: nowrap; }
+  .btn-outline { border: 1px solid #c9a84c44; color: #c9a84c; font-size: 9px; padding: 5px 10px; border-radius: 5px; white-space: nowrap; }
+  .persona-tag { display: inline-block; background: #c9a84c22; border: 1px solid #c9a84c44; color: #e8c76b; font-size: 8px; padding: 2px 7px; border-radius: 10px; margin-top: 6px; }
+  .session-card { flex: 1; background: #0f1c30; border: 1px solid #1a2d45; border-radius: 8px; padding: 10px 12px; text-align: right; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; min-height: 0; overflow: hidden; }
+  .sess-head { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 8px; flex-shrink: 0; }
+  .sess-title { color: #c9a84c; font-size: 9px; font-weight: 700; margin-bottom: 0; line-height: 1.3; }
+  .sess-status { display: inline-block; background: #3dd68c22; color: #3dd68c; font-size: 7px; padding: 1px 6px; border-radius: 3px; line-height: 1.4; white-space: nowrap; }
+  .sess-list { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; width: 100%; }
+  .sess-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; direction: rtl; margin-bottom: 0; }
+  .sess-key { color: #4a6a8a; font-size: 8px; line-height: 1.3; white-space: nowrap; }
+  .sess-val { color: #c8d8f0; font-size: 8px; font-weight: 600; line-height: 1.3; text-align: right; min-width: 0; }
+  .notif-card { flex: 1; background: #0f1c30; border: 1px solid #1a2d45; border-radius: 8px; padding: 10px 12px; text-align: right; }
+  .notif-title { color: #c9a84c; font-size: 9px; font-weight: 700; margin-bottom: 6px; }
+  .notif-item { display: flex; align-items: flex-start; gap: 6px; margin-bottom: 5px; flex-direction: row-reverse; }
+  .notif-dot-r { width: 5px; height: 5px; border-radius: 50%; background: #ff6b6b; margin-top: 3px; flex-shrink: 0; }
+  .notif-text { color: #8aa0b8; font-size: 8px; line-height: 1.3; }
+  .cases-card { flex: 1.5; background: #0f1c30; border: 1px solid #1a2d45; border-radius: 8px; padding: 10px 12px; text-align: right; min-height: 0; overflow: hidden; }
+  .advisor-card { flex: 1; background: #0f1c30; border: 1px solid #1a2d45; border-radius: 8px; padding: 10px 12px; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 8px; text-align: right; min-height: 0; overflow: hidden; align-self: flex-start; }
+  .advisor-title { color: #5aabe6; font-size: 9px; font-weight: 700; line-height: 1.3; flex-shrink: 0; }
+  .advisor-compose { background: #091525; border: 1px solid #122035; border-radius: 6px; padding: 8px 10px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; width: 100%; }
+  .advisor-task { color: #4a6a8a; font-size: 8px; line-height: 1.35; }
+  .advisor-prompt { color: #8aa0b8; font-size: 9px; line-height: 1.5; }
+  .advisor-footer { display: flex; justify-content: flex-end; align-items: center; padding-top: 2px; }
+  .advisor-send { background: #c9a84c; border-radius: 5px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .case-item { border-bottom: 1px solid #142035; padding: 5px 0; }
+  .case-id { color: #c9a84c; font-size: 8px; }
+  .case-name { color: #c8d8f0; font-size: 9px; font-weight: 600; }
+  .case-status { display: inline-block; background: #3dd68c22; color: #3dd68c; font-size: 7px; padding: 1px 5px; border-radius: 3px; }
+  .bottom-bar { background: #07101e; border-top: 1px solid #142035; padding: 5px 16px; display: flex; align-items: center; justify-content: space-between; flex-direction: row-reverse; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #3dd68c; display: inline-block; margin-left: 5px; }
+  .status-text { color: #3dd68c; font-size: 9px; }
+  .powered { color: #2a4a6a; font-size: 8px; }
+  .stand { background: linear-gradient(to bottom, #1a2d45, #0d1829); height: 18px; width: 120px; margin: 0 auto; border-radius: 0 0 4px 4px; }
+  .base { background: #1a2d45; height: 5px; width: 200px; margin: 0 auto; border-radius: 0 0 6px 6px; }
+</style>
+<h2 class="sr-only">واجهة لوحة تحكم MAAT AI للمساعد القانوني الذكي</h2>
+<div class="wrap">
+  <div class="screen-outer">
+    <div class="glow-bar"></div>
+    <div style="height:8px;background:#111827;"></div>
+    <div class="browser-bar">
+      <span class="dot dot-r"></span>
+      <span class="dot dot-y"></span>
+      <span class="dot dot-g"></span>
+    </div>
+    <div class="screen">
+      <div class="topbar">
+        <div>
+          <div class="logo-text">MAAT AI</div>
+          <div class="logo-sub">AI Legal Assistant</div>
+        </div>
+        <div class="top-badges">
+          <span class="badge">ENCRYPTED</span>
+          <span class="badge badge-b">ON-PREMISE</span>
+        </div>
+      </div>
+      <div class="nav">
+        <div class="nav-item active">لوحة التحكم</div>
+        <div class="nav-item">البحث القانوني</div>
+        <div class="nav-item">تحليل القضايا</div>
+        <div class="nav-item">كتابة العقود</div>
+        <div class="nav-item">السوابق القضائية</div>
+        <div class="nav-item">تحليل الاتجاهات</div>
+        <div class="nav-item">المترجم القانوني</div>
+        <div class="nav-item">مكتبة ماعت</div>
+      </div>
+      <div class="body">
+        <div class="main">
+          <div class="stats-row">
+            <div class="stat-card"><div class="stat-val white">١</div><div class="stat-label">القضايا النشطة</div></div>
+            <div class="stat-card"><div class="stat-val white">١</div><div class="stat-label">المواعيد اليوم</div></div>
+            <div class="stat-card"><div class="stat-val" style="color:#ff6b6b;">٢٠٠</div><div class="stat-label">تنبيهات عاجلة</div><div class="stat-badge">عاجل</div></div>
+            <div class="stat-card"><div class="stat-val green">94%</div><div class="stat-label">دقة التحليل AI</div></div>
+            <div class="stat-card"><div class="stat-val white">٦</div><div class="stat-label">الملفات المحفوظة</div></div>
+            <div class="stat-card"><div class="stat-val white">٢٠</div><div class="stat-label">فهرس المكتبة</div></div>
+          </div>
+          <div class="mid-row">
+            <div class="welcome-card">
+              <div>
+                <div style="color:#4a6a8a;font-size:8px;margin-bottom:2px;">٣:٠٩ م</div>
+                <div class="welcome-title">أولويات اليوم</div>
+                <div class="welcome-sub">مساعد قانوني — نظرة عامة على عملك اليوم</div>
+                <div class="persona-tag">⚖️ المحامي</div>
+              </div>
+              <div class="btn-row">
+                <div class="btn-gold">+ بدء قضية جديدة</div>
+                <div class="btn-outline">🔔 التنبيهات العاجلة</div>
+              </div>
+            </div>
+            <div class="session-card">
+              <div class="sess-head">
+                <div class="sess-title">ملخص الجلسة الحالية</div>
+                <span class="sess-status">● نشط</span>
+              </div>
+              <div class="sess-list">
+                <div class="sess-row"><span class="sess-val">محادثة قانونية</span><span class="sess-key">المهمة</span></div>
+                <div class="sess-row"><span class="sess-val">المحامي</span><span class="sess-key">الشخصية</span></div>
+                <div class="sess-row"><span class="sess-val">جنائي</span><span class="sess-key">التخصص</span></div>
+                <div class="sess-row"><span class="sess-val">0</span><span class="sess-key">الرسائل</span></div>
+              </div>
+            </div>
+            <div class="notif-card">
+              <div class="notif-title">🔔 مركز الإشعارات</div>
+              <div class="notif-item"><div class="notif-dot-r"></div><div class="notif-text">200 تنبيه غير مقروء — مراجعة فورية</div></div>
+              <div class="notif-item"><div class="notif-dot-r"></div><div class="notif-text">موعد قضائي اليوم — الساعة 11:00 ص</div></div>
+              <div class="notif-item"><div style="width:5px;height:5px;border-radius:50%;background:#e8c76b;margin-top:3px;flex-shrink:0;"></div><div class="notif-text">تحديث جديد — قانون الإجراءات الجنائية</div></div>
+            </div>
+          </div>
+          <div class="mid-row" style="flex:0.9;">
+            <div class="cases-card">
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;flex-direction:row-reverse;">
+                <span class="sess-title" style="color:#c9a84c;">قضاياك الأخيرة</span>
+                <span style="color:#4a6a8a;font-size:8px;">← عرض الكل</span>
+              </div>
+              <div class="case-item">
+                <div class="case-id">2024/2103</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-direction:row-reverse;">
+                  <div class="case-name">نزاع شراكة — تحويل حصص</div>
+                  <span class="case-status">جارية</span>
+                </div>
+              </div>
+              <div class="case-item">
+                <div class="case-id">2024/1847</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-direction:row-reverse;">
+                  <div class="case-name">عقد إيجار تجاري — نزاع</div>
+                  <span style="display:inline-block;background:#e8c76b22;color:#e8c76b;font-size:7px;padding:1px 5px;border-radius:3px;">معلقة</span>
+                </div>
+              </div>
+            </div>
+            <div class="advisor-card">
+              <div class="advisor-title">المستشار الذكي</div>
+              <div class="advisor-compose">
+                <div class="advisor-task">المهمة: محادثة قانونية عامة</div>
+                <div class="advisor-prompt">اكتب سؤالك القانوني أو اختر تنبيهاً لضبط المهمة...</div>
+                <div class="advisor-footer">
+                  <div class="advisor-send">
+                    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M14 2L8 14L6 9L1 7Z" fill="#0a0f1e"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar">
+          <div class="s-icon active">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="#c9a84c" stroke-width="1.3"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="#4a6a8a" stroke-width="1.3"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="#4a6a8a" stroke-width="1.3"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="#4a6a8a" stroke-width="1.3"/></svg>
+          </div>
+          <div class="s-icon"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="#4a6a8a" stroke-width="1.3"/><path d="M11 11L14 14" stroke="#4a6a8a" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="s-icon"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M2 8h8M2 12h10" stroke="#4a6a8a" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+          <div class="s-icon"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="2" stroke="#4a6a8a" stroke-width="1.3"/><path d="M5 8l2 2 4-4" stroke="#4a6a8a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="s-dot"></div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+        <div><span class="status-dot"></span><span class="status-text">SYSTEM OPERATIONAL</span></div>
+        <div class="powered">MAAT AI — مساعد قانوني ذكي &nbsp;|&nbsp; Powered by Privanta</div>
+      </div>
+    </div>
+  </div>
+  <div class="stand"></div>
+  <div class="base"></div>
+</div>
+</body>
+</html>

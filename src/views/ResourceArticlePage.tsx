@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Clock } from "lucide-react";
 import { useI18n } from "@/i18n/useI18n";
 import { ArticleBody } from "@/components/resources/ArticleBody";
+import { ArticleShare } from "@/components/resources/ArticleShare";
 import { getAdjacentArticles, getArticleBySlug } from "@/lib/resourcesArticles";
 
 export default function ResourceArticlePage() {
@@ -61,6 +62,11 @@ export default function ResourceArticlePage() {
             {en ? "Resources" : "الموارد"}
           </Link>
           <span className="article-reader-toolbar-title">{title}</span>
+          <ArticleShare
+            path={`/resources/${article.slug}`}
+            title={title}
+            className="article-share-trigger--toolbar ms-auto shrink-0"
+          />
         </div>
       </header>
 
@@ -86,11 +92,14 @@ export default function ResourceArticlePage() {
         <h1 className="article-reader-title">{title}</h1>
         <p className="article-reader-deck">{description}</p>
 
-        <div className="article-reader-author">
-          <div className="article-reader-avatar" aria-hidden>
-            P
+        <div className="article-reader-author-row">
+          <div className="article-reader-author">
+            <div className="article-reader-avatar" aria-hidden>
+              P
+            </div>
+            <p className="article-reader-author-name">{byline}</p>
           </div>
-          <p className="article-reader-author-name">{byline}</p>
+          <ArticleShare path={`/resources/${article.slug}`} title={title} />
         </div>
       </div>
 

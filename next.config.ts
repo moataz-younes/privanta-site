@@ -9,7 +9,25 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   async headers() {
+    const embeddableFrameHeaders = [
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
+      {
+        key: "Content-Security-Policy",
+        value: [
+          "default-src 'self'",
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+          "font-src 'self' https://fonts.gstatic.com data:",
+          "img-src 'self' data: https:",
+          "frame-ancestors 'self'",
+        ].join("; "),
+      },
+    ];
+
     return [
+      {
+        source: "/maat-dashboard-mockup.html",
+        headers: embeddableFrameHeaders,
+      },
       {
         source: "/:path*",
         headers: [...SECURITY_HEADERS],

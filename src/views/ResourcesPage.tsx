@@ -5,6 +5,7 @@ import {
   type ArticleCategoryKey,
   resourceArticles,
 } from "@/lib/resourcesArticles";
+import { ArticleShare } from "@/components/resources/ArticleShare";
 import { cn } from "@/lib/utils";
 
 const filterOptions: { key: ArticleCategoryKey; en: string; ar: string }[] = [
@@ -85,11 +86,17 @@ export default function ResourcesPage() {
             const readTime = en ? article.readTime.en : article.readTime.ar;
 
             return (
-              <Link
+              <article
                 key={article.slug}
-                to={`/resources/${article.slug}`}
-                className="surface-card group block p-5 transition-all duration-200 hover:border-[rgba(99,240,221,0.2)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
+                className="surface-card group relative transition-all duration-200 hover:border-[rgba(99,240,221,0.2)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
               >
+                <div className="absolute end-3 top-3 z-10">
+                  <ArticleShare path={`/resources/${article.slug}`} title={title} />
+                </div>
+                <Link
+                  to={`/resources/${article.slug}`}
+                  className="block p-5 pe-14"
+                >
                 <div className="mb-4 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <CategoryIcon className="h-4 w-4 shrink-0 text-[var(--teal)]" />
@@ -110,7 +117,8 @@ export default function ResourcesPage() {
                 <span className="text-sm font-semibold text-[var(--gold)] transition-colors group-hover:text-[var(--teal)]">
                   {en ? "Read article" : "اقرأ المقالة"}
                 </span>
-              </Link>
+                </Link>
+              </article>
             );
           })}
         </div>
