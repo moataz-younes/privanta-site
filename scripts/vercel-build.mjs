@@ -8,11 +8,13 @@ function run(command) {
 run("npm run build");
 run("npx prisma generate");
 
-if (!existsSync("dist/index.html")) {
-  throw new Error("Vite build failed: dist/index.html is missing");
+const viteOut = "vite-dist";
+
+if (!existsSync(`${viteOut}/index.html`)) {
+  throw new Error(`Vite build failed: ${viteOut}/index.html is missing`);
 }
 
 rmSync("public", { recursive: true, force: true });
-cpSync("dist", "public", { recursive: true });
+cpSync(viteOut, "public", { recursive: true });
 
 run("npx next build");

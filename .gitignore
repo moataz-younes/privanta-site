@@ -3,7 +3,10 @@ node_modules/
 
 # Build outputs
 dist/
+vite-dist/
 .next/
+public/index.html
+public/assets/
 out/
 
 # Environment

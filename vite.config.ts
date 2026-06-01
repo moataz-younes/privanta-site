@@ -26,6 +26,8 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   build: {
+    // Not "dist" — Vercel treats a root `dist/` folder as the deploy output and breaks Next.js (.next).
+    outDir: "vite-dist",
     rollupOptions: {
       output: {
         manualChunks(id) {
