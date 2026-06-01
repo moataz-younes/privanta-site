@@ -117,6 +117,8 @@ const Navbar = ({ variant = "main" }: NavbarProps) => {
     };
   }, [mobileOpen]);
 
+  const closeMobileMenu = () => setMobileOpen(false);
+
   const brandSubtitle =
     variant === "platform"
       ? locale === "ar"
@@ -131,7 +133,8 @@ const Navbar = ({ variant = "main" }: NavbarProps) => {
   return (
     <header
       className={cn(
-        "privanta-navbar-shell fixed inset-x-0 top-0 z-[9999] border-b border-white/[0.04] bg-[#0B0F1A]/55 backdrop-blur-xl supports-[backdrop-filter]:bg-[#0B0F1A]/45",
+        "privanta-navbar-shell fixed inset-x-0 top-0 border-b border-white/[0.04] bg-[#0B0F1A]/55 backdrop-blur-xl supports-[backdrop-filter]:bg-[#0B0F1A]/45",
+        mobileOpen ? "z-[10005]" : "z-[9999]",
         scrolled && "is-scrolled",
         hideOnScroll && "is-hidden",
         homeBooting && location.pathname === "/" && "is-booting",
@@ -295,41 +298,33 @@ const Navbar = ({ variant = "main" }: NavbarProps) => {
       </div>
 
       {typeof document !== "undefined" &&
+        mobileOpen &&
         createPortal(
-          <AnimatePresence>
-            {mobileOpen ? (
-              <>
-                <motion.button
-                  type="button"
-                  className="fixed inset-0 z-[10000] bg-black/60 touch-manipulation lg:hidden"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  aria-label={locale === "ar" ? "إغلاق القائمة" : "Close menu"}
-                  onClick={() => setMobileOpen(false)}
-                />
-                <motion.div
-                  id="privanta-mobile-nav"
-                  role="dialog"
-                  aria-modal="true"
-                  aria-label={locale === "ar" ? "القائمة" : "Menu"}
-                  initial={{ x: drawerDirectionClass === "rtl" ? "-100%" : "100%" }}
-                  animate={{ x: 0 }}
-                  exit={{ x: drawerDirectionClass === "rtl" ? "-100%" : "100%" }}
-                  transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
-                  className="fixed inset-y-0 end-0 z-[10001] flex h-dvh max-h-dvh w-[min(18rem,88vw)] flex-col border-s border-[rgba(47,191,204,0.08)] bg-[#0D1A26] shadow-2xl lg:hidden"
-                >
-                  <div className="flex shrink-0 items-center justify-between border-b border-[var(--border-sub)] px-4 py-3">
+          <>
+            <div
+              className="privanta-mobile-backdrop fixed inset-0 z-[10000] bg-black/60 lg:hidden"
+              aria-hidden
+              onClick={closeMobileMenu}
+            />
+            <aside
+              id="privanta-mobile-nav"
+              role="dialog"
+              aria-modal="true"
+              aria-label={locale === "ar" ? "القائمة" : "Menu"}
+              data-drawer-dir={drawerDirectionClass}
+              className="privanta-mobile-drawer fixed inset-y-0 end-0 z-[10001] flex h-dvh max-h-dvh w-[min(18rem,88vw)] flex-col border-s border-[rgba(47,191,204,0.08)] bg-[#0D1A26] shadow-2xl lg:hidden"
+            >
+                  <div className="relative z-10 flex shrink-0 items-center justify-between border-b border-[var(--border-sub)] px-4 py-3">
                     <span className="text-sm font-semibold tracking-wide text-[var(--text-primary)]">
                       {locale === "ar" ? "القائمة" : "Menu"}
                     </span>
                     <button
                       type="button"
-                      className="touch-manipulation rounded-lg p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+                      className="relative z-20 min-h-11 min-w-11 touch-manipulation rounded-lg p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)]"
                       aria-label={locale === "ar" ? "إغلاق" : "Close"}
-                      onClick={() => setMobileOpen(false)}
+                      onClick={closeMobileMenu}
                     >
-                      <X className="h-5 w-5" />
+                      <X className="h-5 w-5 pointer-events-none" />
                     </button>
                   </div>
                   <nav className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto overscroll-contain p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
@@ -465,10 +460,8 @@ const Navbar = ({ variant = "main" }: NavbarProps) => {
                 </a>
               )}
                   </nav>
-                </motion.div>
-              </>
-            ) : null}
-          </AnimatePresence>,
+            </aside>
+          </>,
           document.body,
         )}
     </header>

@@ -13,7 +13,7 @@ const PlatformDashboard = () => {
     : { duration: MOTION_DURATION.cinematic, ease: MOTION_EASE };
 
   return (
-    <div className="platform-dashboard-float relative mx-auto aspect-[5/4] w-full max-w-[640px]">
+    <div className="platform-dashboard-float relative mx-auto w-full max-w-[640px] aspect-[5/4] max-md:aspect-auto">
       {/* glow */}
       <div className="platform-dashboard-glow absolute inset-0 rounded-full bg-gradient-brand opacity-8 blur-2xl" />
 
@@ -22,7 +22,7 @@ const PlatformDashboard = () => {
         initial={reduceMotion ? false : { opacity: 0, y: 24, filter: "blur(6px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={panelTransition}
-        className="absolute inset-0 overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02]"
+        className="platform-dashboard-panel absolute inset-0 max-md:relative max-md:inset-auto overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02]"
       >
         {/* top bar */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
@@ -123,7 +123,7 @@ const PlatformDashboard = () => {
         initial={reduceMotion ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.85, duration: MOTION_DURATION.slow, ease: MOTION_EASE }}
-        className="platform-notification-pulse absolute -bottom-6 -left-4 w-[230px] rounded-xl border border-white/5 bg-white/[0.02] p-3 backdrop-blur-sm"
+        className="platform-notification-pulse platform-dashboard-float-card absolute -bottom-6 -left-4 max-md:static max-md:w-full w-[230px] rounded-xl border border-white/5 bg-white/[0.02] p-3 backdrop-blur-sm"
       >
         <div className="flex items-center gap-2 mb-1.5">
           <div className="platform-live-indicator h-2 w-2 rounded-full bg-brand-cyan-glow" />
@@ -138,7 +138,7 @@ const PlatformDashboard = () => {
         initial={reduceMotion ? false : { opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.05, duration: MOTION_DURATION.slow, ease: MOTION_EASE }}
-        className="absolute -top-5 -right-3 w-[180px] rounded-xl border border-white/5 bg-white/[0.02] p-3 backdrop-blur-sm"
+        className="platform-dashboard-float-card absolute -top-5 -right-3 max-md:static max-md:w-full w-[180px] rounded-xl border border-white/5 bg-white/[0.02] p-3 backdrop-blur-sm"
       >
         <div className="flex items-center justify-between mb-2">
           <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Coverage</span>

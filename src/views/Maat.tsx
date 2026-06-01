@@ -469,7 +469,7 @@ export function MaatContent({ isSubdomain = false }: MaatContentProps) {
 
         <PlatformSection
           id="product-showcase"
-          className="maat-story-on-cover home-strip-standard scroll-mt-28"
+          className="maat-story-on-cover home-strip-standard scroll-mt-28 hidden md:block"
           aria-label={copy.hero.dashboardAlt}
         >
           <div className="container-privanta relative z-10 maat-story-inner">

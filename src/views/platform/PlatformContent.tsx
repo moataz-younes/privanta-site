@@ -15,14 +15,12 @@ import {
 import PlatformDashboard from "@/components/visuals/PlatformDashboard";
 import { useI18n } from "@/i18n/useI18n";
 import { platformStaggerContainer, platformStaggerItem } from "@/lib/platformMotion";
-import { complianceLogos, getComplianceLogoClassName } from "@/lib/complianceLogos";
+import { ComplianceFrameworkLogos } from "@/components/ComplianceFrameworkLogos";
 import { getPlatformCopy } from "@/views/platform/platformCopy";
 
 export type PlatformContentProps = {
   isSubdomain?: boolean;
 };
-
-const marqueeLogos = [...complianceLogos, ...complianceLogos];
 
 function HomeIndustryTile({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
   return (
@@ -241,25 +239,7 @@ const PlatformContent = ({ isSubdomain: _isSubdomain = false }: PlatformContentP
           </PlatformFadeItem>
           <div className="compliance-marquee-line mx-auto mt-3 mb-7" />
           <PlatformFadeItem delay={0.12}>
-            <div className="compliance-marquee-mask mt-5" aria-label={copy.aria.frameworks}>
-              <div className="compliance-marquee-track">
-                {marqueeLogos.map((logo, idx) => (
-                  <div
-                    key={`${logo.name}-${idx}`}
-                    className="compliance-logo-item"
-                    aria-hidden={idx >= complianceLogos.length}
-                  >
-                    <img
-                      src={logo.src}
-                      alt={idx < complianceLogos.length ? logo.name : ""}
-                      className={getComplianceLogoClassName(logo.size)}
-                      loading="eager"
-                      decoding="async"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+            <ComplianceFrameworkLogos ariaLabel={copy.aria.frameworks} />
           </PlatformFadeItem>
         </div>
       </PlatformSection>

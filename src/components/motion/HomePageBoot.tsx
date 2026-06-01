@@ -11,11 +11,13 @@ export function HomePageBoot() {
 
     const t = window.setTimeout(() => {
       document.body.setAttribute("data-home-boot", "ready");
+      root.classList.remove("privanta-home-boot");
     }, 1400);
 
     return () => {
       window.clearTimeout(t);
       document.body.removeAttribute("data-home-boot");
+      root.classList.remove("privanta-home-boot");
     };
   }, []);
 

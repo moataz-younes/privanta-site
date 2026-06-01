@@ -36,7 +36,7 @@ import {
   Monitor,
   ArrowRight,
 } from "lucide-react";
-import { complianceLogos, getComplianceLogoClassName } from "@/lib/complianceLogos";
+import { ComplianceFrameworkLogos } from "@/components/ComplianceFrameworkLogos";
 
 const HERO_ROTATE_EN = ["Start Enforcing It", "Start Governing It"] as const;
 const HERO_ROTATE_AR = ["ابدأ بفرضه", "ابدأ بالحوكمة"] as const;
@@ -86,7 +86,6 @@ const featuredPosts = [
 const Index = () => {
   const { locale } = useI18n();
   const en = locale === "en";
-  const marqueeLogos = [...complianceLogos, ...complianceLogos];
   const [heroRotateIdx, setHeroRotateIdx] = useState(0);
 
   useEffect(() => {
@@ -777,28 +776,9 @@ const Index = () => {
             {en ? "All the frameworks you need" : "كل الأطر التي تحتاجها"}
           </h2>
           <div className="compliance-marquee-line mx-auto mt-3 mb-7" />
-          <div
-            className="compliance-marquee-mask mt-5"
-            aria-label={en ? "Compliance frameworks" : "أطر الامتثال"}
-          >
-            <div className="compliance-marquee-track">
-              {marqueeLogos.map((logo, idx) => (
-                <div
-                  key={`${logo.name}-${idx}`}
-                  className="compliance-logo-item"
-                  aria-hidden={idx >= complianceLogos.length}
-                >
-                    <img
-                      src={logo.src}
-                      alt={idx < complianceLogos.length ? logo.name : ""}
-                      className={getComplianceLogoClassName(logo.size)}
-                      loading="eager"
-                      decoding="async"
-                    />
-                </div>
-              ))}
-            </div>
-          </div>
+          <ComplianceFrameworkLogos
+            ariaLabel={en ? "Compliance frameworks" : "أطر الامتثال"}
+          />
         </div>
       </MotionSection>
 

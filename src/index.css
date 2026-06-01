@@ -904,6 +904,20 @@
     isolation: isolate;
   }
 
+  body[data-home-boot="ready"] .home-page .privanta-hero-photo,
+  body[data-home-boot="ready"] .home-page .privanta-hero-wave,
+  body[data-home-boot="ready"] .home-page .privanta-hero-grid-overlay {
+    opacity: 1;
+  }
+
+  body[data-home-boot="ready"] .home-page .privanta-hero-wave {
+    opacity: 0.2;
+  }
+
+  body[data-home-boot="ready"] .home-page .privanta-hero-grid-overlay {
+    opacity: 0.16;
+  }
+
   .privanta-hero-photo {
     position: absolute;
     inset: 0;
@@ -917,9 +931,26 @@
   }
 
   @media (max-width: 767px) {
+    .home-page .home-strip-hero {
+      background:
+        linear-gradient(180deg, rgba(4, 7, 14, 0.55) 0%, rgba(4, 7, 14, 0.72) 100%),
+        url("/images/home-bg-from-html.jpg") center center / cover no-repeat;
+    }
+
     .privanta-hero-photo {
       transform: scale(1.06);
-      filter: saturate(1) brightness(0.8) blur(0);
+      filter: saturate(1.05) brightness(0.88) blur(0);
+      opacity: 1 !important;
+    }
+
+    .privanta-hero-photo-overlay {
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.35) 0%,
+          rgba(0, 0, 0, 0.2) 45%,
+          rgba(0, 0, 0, 0.45) 100%
+        );
     }
   }
 
@@ -1153,6 +1184,47 @@
     gap: clamp(1.5rem, 3vw, 2rem); /* max 32px — spacing audit */
     animation: marquee 40s linear infinite;
     will-change: transform;
+  }
+
+  .compliance-logos-mobile__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .compliance-logos-mobile__item {
+    display: flex;
+    min-height: 4.5rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(8, 14, 24, 0.55);
+    padding: 0.5rem;
+  }
+
+  .compliance-logos-mobile__item img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 3.25rem;
+    object-fit: contain;
+    opacity: 0.92;
+  }
+
+  @media (min-width: 480px) {
+    .compliance-logos-mobile__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 380px) {
+    .compliance-logos-mobile__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   .compliance-logo-item {
@@ -4065,6 +4137,83 @@
   @media (max-width: 1023px) {
     .home-page .platform-hero-layout {
       grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .home-page .platform-hero-strip {
+      padding-block: 1.75rem 2rem;
+    }
+
+    .home-page .platform-hero-layout {
+      gap: 1.5rem;
+    }
+
+    .home-page .platform-hero-dashboard {
+      margin-top: 0.25rem;
+    }
+
+    .home-page .platform-hero-dashboard .relative {
+      margin-inline: auto;
+      max-width: 100%;
+    }
+
+    .platform-dashboard-float {
+      aspect-ratio: auto;
+      min-height: 0;
+      max-width: 100%;
+      padding-bottom: 0.5rem;
+    }
+
+    .platform-dashboard-float > .absolute.inset-0.overflow-hidden {
+      position: relative;
+      inset: auto;
+      min-height: 280px;
+    }
+
+    .platform-dashboard-glow {
+      display: none;
+    }
+
+    .platform-dashboard-float .absolute.-bottom-6,
+    .platform-dashboard-float .absolute.-top-5 {
+      position: relative;
+      inset: auto;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 0.75rem;
+    }
+
+    .platform-dashboard-float .absolute.-bottom-6 {
+      margin-top: 0.5rem;
+    }
+
+    .platform-dashboard-float .grid.grid-cols-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .platform-dashboard-float .grid.grid-cols-5 {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+
+    .platform-dashboard-float .col-span-3,
+    .platform-dashboard-float .col-span-2 {
+      grid-column: auto;
+    }
+
+    .platform-dashboard-float .text-\[10px\],
+    .platform-dashboard-float .text-\[9px\] {
+      font-size: 0.625rem;
+    }
+
+    .platform-dashboard-float .font-heading.text-xl {
+      font-size: 1rem;
+    }
+
+    .platform-dashboard-float .text-\[10px\].font-mono {
+      display: none;
     }
   }
 
